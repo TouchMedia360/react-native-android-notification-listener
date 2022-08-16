@@ -10,7 +10,11 @@ public class BootUpReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if(intent.getAction() == Intent.ACTION_BOOT_COMPLETED){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                context.startForegroundService(new Intent(context, RNAndroidNotificationListener.class));
+                try {
+                    context.startForegroundService(new Intent(context, RNAndroidNotificationListener.class));
+                } catch (Exception e) {
+                    Log.e("RNAndroidNotificationListener", e.getMessage());
+                }
                 return;
             }
             context.startService(new Intent(context, RNAndroidNotificationListener.class));

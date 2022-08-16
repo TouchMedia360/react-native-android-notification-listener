@@ -23,20 +23,25 @@ public class RNAndroidNotificationListener extends NotificationListenerService {
             return;
         }
 
-        Context context = getApplicationContext();
+        try {
+            Context context = getApplicationContext();
 
-        Intent serviceIntent = new Intent(context, RNAndroidNotificationListenerHeadlessJsTaskService.class);
+            Intent serviceIntent = new Intent(context, RNAndroidNotificationListenerHeadlessJsTaskService.class);
 
-        RNNotification notification = new RNNotification(context, sbn);
+            RNNotification notification = new RNNotification(context, sbn);
 
-        Gson gson = new Gson();
-        String serializedNotification = gson.toJson(notification);
+            Gson gson = new Gson();
+            String serializedNotification = gson.toJson(notification);
 
-        serviceIntent.putExtra("notification", serializedNotification);
+            serviceIntent.putExtra("notification", serializedNotification);
 
-        HeadlessJsTaskService.acquireWakeLockNow(context);
+            HeadlessJsTaskService.acquireWakeLockNow(context);
 
-        context.startService(serviceIntent);
+            context.startService(serviceIntent);
+
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
     }
 
     @Override

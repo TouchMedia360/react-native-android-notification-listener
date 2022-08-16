@@ -12,12 +12,16 @@ public class RNAndroidNotificationListenerHeadlessJsTaskService extends Headless
     protected @Nullable HeadlessJsTaskConfig getTaskConfig(Intent intent) {
         Bundle extras = intent.getExtras();
         if (extras != null) {
-            return new HeadlessJsTaskConfig(
-                    "RNAndroidNotificationListenerHeadlessJs",
-                    Arguments.fromBundle(extras),
-                    15000, // timeout for the task
-                    true // optional: defines whether or not  the task is allowed in foreground. Default is false
-            );
+            try {
+                return new HeadlessJsTaskConfig(
+                        "RNAndroidNotificationListenerHeadlessJs",
+                        Arguments.fromBundle(extras),
+                        15000, // timeout for the task
+                        true // optional: defines whether or not  the task is allowed in foreground. Default is false
+                );
+            } catch (Exception e) {
+                Log.e("RNAndroidNotificationListener", e.getMessage());
+            }
         }
         return null;
     }

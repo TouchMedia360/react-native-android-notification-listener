@@ -36,28 +36,32 @@ public class RNNotification {
     protected String time;
     protected String iconLarge;
     public RNNotification(Context context, StatusBarNotification sbn) {
-        Notification notification = sbn.getNotification();
+        try {
+            Notification notification = sbn.getNotification();
 
-        if (notification != null && notification.extras != null) {
-            String packageName = sbn.getPackageName();
+            if (notification != null && notification.extras != null) {
+                String packageName = sbn.getPackageName();
 
-            this.time = Long.toString(sbn.getPostTime());
-            this.app = TextUtils.isEmpty(packageName) ? "Unknown App" : packageName;
-            this.title = this.getPropertySafely(notification, Notification.EXTRA_TITLE);
-            this.titleBig = this.getPropertySafely(notification, Notification.EXTRA_TITLE_BIG);
-            this.text = this.getPropertySafely(notification, Notification.EXTRA_TEXT);
-            this.subText = this.getPropertySafely(notification, Notification.EXTRA_SUB_TEXT);
-            this.summaryText = this.getPropertySafely(notification, Notification.EXTRA_SUMMARY_TEXT);
-            this.bigText = this.getPropertySafely(notification, Notification.EXTRA_BIG_TEXT);
-            this.audioContentsURI = this.getPropertySafely(notification, Notification.EXTRA_AUDIO_CONTENTS_URI);
-            this.imageBackgroundURI = this.getPropertySafely(notification, Notification.EXTRA_BACKGROUND_IMAGE_URI);
-            this.extraInfoText = this.getPropertySafely(notification, Notification.EXTRA_INFO_TEXT);
-            this.iconLarge = this.getNotificationLargeIcon(context, notification);
-            this.icon = this.getNotificationIcon(context, notification);
-            this.image = this.getNotificationImage(notification);
-            this.groupedMessages = this.getGroupedNotifications(notification);
-        } else {
-            Log.d(TAG, "The notification received has no data");
+                this.time = Long.toString(sbn.getPostTime());
+                this.app = TextUtils.isEmpty(packageName) ? "Unknown App" : packageName;
+                this.title = this.getPropertySafely(notification, Notification.EXTRA_TITLE);
+                this.titleBig = this.getPropertySafely(notification, Notification.EXTRA_TITLE_BIG);
+                this.text = this.getPropertySafely(notification, Notification.EXTRA_TEXT);
+                this.subText = this.getPropertySafely(notification, Notification.EXTRA_SUB_TEXT);
+                this.summaryText = this.getPropertySafely(notification, Notification.EXTRA_SUMMARY_TEXT);
+                this.bigText = this.getPropertySafely(notification, Notification.EXTRA_BIG_TEXT);
+                this.audioContentsURI = this.getPropertySafely(notification, Notification.EXTRA_AUDIO_CONTENTS_URI);
+                this.imageBackgroundURI = this.getPropertySafely(notification, Notification.EXTRA_BACKGROUND_IMAGE_URI);
+                this.extraInfoText = this.getPropertySafely(notification, Notification.EXTRA_INFO_TEXT);
+                this.iconLarge = this.getNotificationLargeIcon(context, notification);
+                this.icon = this.getNotificationIcon(context, notification);
+                this.image = this.getNotificationImage(notification);
+                this.groupedMessages = this.getGroupedNotifications(notification);
+            } else {
+                Log.d(TAG, "The notification received has no data");
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
         }
     }
 
@@ -67,7 +71,7 @@ public class RNNotification {
 
             return propCharSequence == null ? "" : propCharSequence.toString().trim();
         } catch (Exception e) {
-            Log.d(TAG, e.getMessage());
+            Log.e(TAG, e.getMessage());
             return "";
         }
     }
@@ -89,7 +93,7 @@ public class RNNotification {
 
             return result;
         } catch (Exception e) {
-            Log.d(TAG, e.getMessage());
+            Log.e(TAG, e.getMessage());
             return result;
         }
     }
@@ -110,7 +114,7 @@ public class RNNotification {
 
             return TextUtils.isEmpty(result) ? result : "data:image/png;base64," + result;
         } catch (Exception e) {
-            Log.d(TAG, e.getMessage());
+            Log.e(TAG, e.getMessage());
             return "";
         }
     }
@@ -132,7 +136,7 @@ public class RNNotification {
 
             return TextUtils.isEmpty(result) ? result : "data:image/png;base64," + result;
         } catch (Exception e) {
-            Log.d(TAG, e.getMessage());
+            Log.e(TAG, e.getMessage());
             return "";
         }
     }
@@ -153,7 +157,7 @@ public class RNNotification {
 
             return TextUtils.isEmpty(result) ? result : "data:image/png;base64," + result;
         } catch (Exception e) {
-            Log.d(TAG, e.getMessage());
+            Log.e(TAG, e.getMessage());
             return "";
         }
     }
