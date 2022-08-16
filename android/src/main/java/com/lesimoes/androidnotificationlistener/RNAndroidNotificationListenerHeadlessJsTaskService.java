@@ -6,6 +6,7 @@ import com.facebook.react.HeadlessJsTaskService;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.jstasks.HeadlessJsTaskConfig;
 import javax.annotation.Nullable;
+import android.util.Log;
 
 public class RNAndroidNotificationListenerHeadlessJsTaskService extends HeadlessJsTaskService {
     @Override
